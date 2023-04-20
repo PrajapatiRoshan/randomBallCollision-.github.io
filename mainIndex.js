@@ -74,7 +74,7 @@ const checkMouseCollision = (ball) => {
 		ball.r += 5;
 		canvas.style.cursor = "pointer";
 	}
-	if (distanceBall > ball.r)
+	if (distanceBall > ball.r + 30)
 		// distance between ball and mouse when getting away
 		ball.r = ball.origR;
 };
