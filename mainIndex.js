@@ -42,7 +42,7 @@ const createBall = () => {
 const windowSize = () => {
 	canvas.width = window.innerWidth;
 	canvas.height = window.innerHeight;
-	createBall();
+	context.clearRect(0, 0, canvas.width, canvas.height);
 };
 
 // drawing balls from balls array
@@ -61,7 +61,7 @@ const checkMouseCollision = (ball) => {
 		Math.pow(ball.x - mouseX, 2) + Math.pow(ball.y - mouseY, 2)
 	);
 
-	if (distanceBall < ball.r) {
+	if (distanceBall < ball.r && ball.r < 50) {
 		// distance between ball and mouse when getting close {
 		if (
 			ball.x + ball.r > canvas.width - 20 ||
@@ -71,8 +71,8 @@ const checkMouseCollision = (ball) => {
 		)
 			// check ball is near to edge then don't increment
 			return;
-
-		ball.r = 30;
+		ball.r += 5;
+		canvas.style.cursor = "pointer";
 	}
 	if (distanceBall > ball.r)
 		// distance between ball and mouse when getting away
@@ -115,5 +115,12 @@ window.requestAnimationFrame = (() =>
 // call to initialize canvas width and height
 windowSize();
 
+function initialize() {
+	window.addEventListener("resize", windowSize, false);
+	windowSize();
+	createBall();
+}
+
+initialize();
 // start animation
 window.requestAnimationFrame(ballAnimationLoop);
